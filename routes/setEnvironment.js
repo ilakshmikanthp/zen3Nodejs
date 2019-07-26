@@ -9,7 +9,7 @@ router.post('/:process/:key/:value', function(req, res, next) {
   try {
     var envData = dotenv.parse(fs.readFileSync('./' + req.params.process + '/.env'));
      envData[req.params.key] = req.params.value;
-     fs.writeFileSync('./' + req.params.process + '/.env', JSON.stringify(envData).replace(/"/g,'').replace(/"/g,'').replace(/{/g,'').replace(/}/g,'').replace(/:/g,'=').replace(/,/g,'\n'));
+     fs.writeFileSync('./' + req.params.process + '/.env', JSON.stringify(envData).replace(/{|}|"|/g,'').replace(/:/g,'=').replace(/,/g,'\n'));
     res.status(200).json({
       status: "SUCESS",
       data: envData
